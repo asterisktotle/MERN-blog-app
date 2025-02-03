@@ -6,7 +6,7 @@ import productRoutes from './routes/product-route.js';
 dotenv.config(); //this allows us to use the MongoDB url
 
 const app = express();
-const HOST = 8080;
+const HOST = process.env.PORT || 8000;
 
 // route
 // app.get('/', (req, res) => {
@@ -22,5 +22,5 @@ app.use('/api/products', productRoutes);
 
 app.listen(HOST, () => {
 	connectDB();
-	console.log(`Server started at Port ${HOST} `);
+	console.log(`Server started at http://localhost:${HOST} `);
 });
