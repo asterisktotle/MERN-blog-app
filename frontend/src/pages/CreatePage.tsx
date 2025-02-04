@@ -13,35 +13,43 @@ const CreatePage = () => {
 	const { createProduct } = useProductStore();
 
 	const handleAddProduct = async () => {
+		const { success, message } = await createProduct(newProduct);
+
+		const promise = new Promise<void>((resolve, reject) => {
+			setTimeout(() => {
+				if (!success) {
+					reject();
+				} else resolve();
+			}, 3000);
+		});
+
 		// const promise = new Promise<void>((resolve, reject) => {
 		// 	setTimeout(() => resolve(), 2000);
 		// });
 
-		// toaster.promise(promise, {
-		// 	success: {
-		// 		title: 'Successfully Added',
-		// 		description: 'Looks great',
-		// 	},
-		// 	error: {
-		// 		title: 'Product added failed',
-		// 		description: 'Something wrong with the upload',
-		// 	},
-		// 	loading: { title: 'Uploading...', description: 'Please wait' },
-		// });
-
-		const { success, message } = await createProduct(newProduct);
-
-		if (!success) {
-			toaster.error({
-				title: 'Failed to add products.',
+		toaster.promise(promise, {
+			success: {
+				title: message,
+				description: 'Looks great',
+			},
+			error: {
+				title: 'Product added failed',
 				description: message,
-			});
-		} else {
-			toaster.success({
-				title: 'Product added products.',
-				description: message,
-			});
-		}
+			},
+			loading: { title: 'Adding the product...', description: 'Please wait' },
+		});
+
+		// if (!success) {
+		// 	toaster.error({
+		// 		title: 'Failed to add products.',
+		// 		description: message,
+		// 	});
+		// } else {
+		// 	toaster.success({
+		// 		title: 'Product added products.',
+		// 		description: message,
+		// 	});
+		// }
 
 		console.log(newProduct);
 		setNewProduct({ name: '', price: 0, image: '' });
