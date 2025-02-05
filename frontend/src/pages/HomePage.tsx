@@ -1,6 +1,8 @@
-import { Container, VStack, Text, SimpleGrid } from '@chakra-ui/react';
+import { Container, VStack, Text, SimpleGrid, Box } from '@chakra-ui/react';
 import { useProductStore } from '@/store/product';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import ProductCard from '@/components/ProductCard';
 
 const HomePage = () => {
 	const { fetchProduct, products } = useProductStore();
@@ -8,8 +10,6 @@ const HomePage = () => {
 	useEffect(() => {
 		fetchProduct();
 	}, [fetchProduct]);
-
-	console.log(products);
 
 	return (
 		<Container maxW="container.xl" py={12}>
@@ -32,16 +32,23 @@ const HomePage = () => {
 					gap={10}
 					w={'full'}
 				>
-					{products && products.length ? (
+					{products && products.length > 0 ? (
 						products.map((item) => (
-							<div key={item.name}>
-								<img src={item.image} alt={item.name} />
-								<p>{item.name}</p>
-								<p>{item.price}</p>
-							</div>
+							<ProductCard
+								key={item.image}
+								price={item.price}
+								name={item.name}
+								image={item.image}
+								_id={item._id}
+							/>
 						))
 					) : (
-						<Text>No Products Added </Text>
+						<Box>
+							No Products found{' '}
+							<Link to={'/create'}>
+								<Text>Create a Product</Text>
+							</Link>{' '}
+						</Box>
 					)}
 				</SimpleGrid>
 			</VStack>

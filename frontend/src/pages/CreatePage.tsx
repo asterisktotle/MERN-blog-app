@@ -23,10 +23,6 @@ const CreatePage = () => {
 			}, 3000);
 		});
 
-		// const promise = new Promise<void>((resolve, reject) => {
-		// 	setTimeout(() => resolve(), 2000);
-		// });
-
 		toaster.promise(promise, {
 			success: {
 				title: message,
@@ -39,20 +35,8 @@ const CreatePage = () => {
 			loading: { title: 'Adding the product...', description: 'Please wait' },
 		});
 
-		// if (!success) {
-		// 	toaster.error({
-		// 		title: 'Failed to add products.',
-		// 		description: message,
-		// 	});
-		// } else {
-		// 	toaster.success({
-		// 		title: 'Product added products.',
-		// 		description: message,
-		// 	});
-		// }
-
 		console.log(newProduct);
-		setNewProduct({ name: '', price: 0, image: '' });
+		setNewProduct({ name: '', price: 0, image: '', _id: '' });
 	};
 
 	return (
